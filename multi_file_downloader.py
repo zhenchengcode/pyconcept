@@ -44,8 +44,8 @@ def generate_large_csv():
 			
 			yield mem_file.getvalue()
 
-		return Response(generate(), mimetype='application/zip')
-	return redirect(url_for('generate_large_csv'))
+	return Response(generate(), mimetype='application/zip')
+	# return redirect(url_for('generate_large_csv'))
 
 
 
