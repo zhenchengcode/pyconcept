@@ -30,7 +30,9 @@ def download_all():
 def generate_large_csv():
 	mypath = './local_files'
 	resultFiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+
 	def generate():
+		
 		for file in resultFiles:
 			mem_file = BytesIO()
 			with zipfile.ZipFile(mem_file, mode="w",
@@ -39,14 +41,20 @@ def generate_large_csv():
 				
 				zf.writestr(file, file_object.read())
 				
-			# zf.close()
+			zf.close()
 			mem_file.seek(0)
 			
 			yield mem_file.getvalue()
+		print('end of generate function')
+
+	
 
 	return Response(generate(), mimetype='application/zip')
-	# return redirect(url_for('generate_large_csv'))
 
+@app.route('/files', defaults={'page':1})
+@app.route('/files/page/<int:page>')
+def show_pages(page):
+	
 
 
 
